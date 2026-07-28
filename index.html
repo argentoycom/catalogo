@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARGENTOY · Catálogo de Figuras Bizarras</title>
+<meta name="description" content="Catálogo de figuras de acción artesanales y bizarras. Armá tu pedido y mandalo por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15131c;
+    --bg2:#1d1a28;
+    --ink:#0a0910;
+    --paper:#f6f3ea;
+    --txt:#f4f1ff;
+    --mut:#a39db8;
+    --yellow:#ffd23f;
+    --magenta:#ff2e7e;
+    --cyan:#2ee6d6;
+    --lime:#c6ff3a;
+    --wa:#25d366;
+    --line:3px solid var(--ink);
+    --shadow:6px 6px 0 var(--ink);
+    --shadow-sm:4px 4px 0 var(--ink);
+    --shadow-lg:10px 10px 0 var(--ink);
+    --disp:'Anton',sans-serif;
+    --body:'Space Grotesk',sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    color:var(--txt);
+    background:var(--bg);
+    background-image:radial-gradient(rgba(255,255,255,.05) 1.4px,transparent 1.4px);
+    background-size:22px 22px;
+    min-height:100vh;
+    overflow-x:hidden;
+    padding-bottom:120px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a{color:inherit}
+
+  .marquee{
+    background:var(--magenta);color:var(--ink);border-bottom:var(--line);
+    overflow:hidden;white-space:nowrap;font-family:var(--disp);
+    letter-spacing:1px;text-transform:uppercase;font-size:14px;
+  }
+  .marquee__track{display:inline-block;animation:scroll 22s linear infinite;padding:7px 0}
+  .marquee__track span{padding:0 18px}
+  .marquee__track span::after{content:"✦";padding-left:36px}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  header{max-width:1280px;margin:0 auto;padding:34px 20px 8px;}
+  .brand{
+    display:inline-block;font-family:var(--disp);font-size:clamp(40px,9vw,86px);
+    line-height:.86;text-transform:uppercase;letter-spacing:1px;
+    color:var(--yellow);
+    -webkit-text-stroke:2px var(--ink);
+    text-shadow:5px 5px 0 var(--magenta);
+    transform:rotate(-1.5deg);
+  }
+  .tagline{
+    margin-top:14px;max-width:640px;font-size:clamp(15px,2.4vw,18px);
+    color:var(--txt);line-height:1.45;
+  }
+  .tagline b{color:var(--cyan)}
+  .hint{
+    margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:12px;background:var(--bg2);
+    border:var(--line);box-shadow:var(--shadow-sm);padding:8px 12px;
+    transform:rotate(.6deg);
+  }
+  .hint .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 2px var(--ink)}
+
+  .navwrap{position:sticky;top:0;z-index:50;background:var(--bg);
+    border-bottom:var(--line);margin-top:22px;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1.4px,transparent 1.4px);background-size:22px 22px;}
+  .nav{
+    max-width:1280px;margin:0 auto;display:flex;gap:10px;
+    padding:14px 20px;overflow-x:auto;scrollbar-width:none;
+  }
+  .nav::-webkit-scrollbar{display:none}
+  .pill{
+    flex:0 0 auto;cursor:pointer;font-family:var(--body);font-weight:700;
+    font-size:14px;text-transform:uppercase;letter-spacing:.4px;
+    background:var(--bg2);color:var(--txt);border:var(--line);
+    padding:10px 14px;display:flex;align-items:center;gap:9px;
+    box-shadow:var(--shadow-sm);transition:transform .12s ease,box-shadow .12s ease,background .12s;
+    transform:rotate(-.5deg);
+  }
+  .pill:nth-child(even){transform:rotate(.7deg)}
+  .pill:hover{transform:translate(-2px,-2px) rotate(0);box-shadow:6px 6px 0 var(--ink)}
+  .pill .em{font-size:18px;line-height:1}
+  .pill .cnt{font-family:var(--mono);font-size:11px;background:var(--ink);color:var(--yellow);
+    padding:1px 6px;border-radius:20px}
+  .pill.active{background:var(--yellow);color:var(--ink);box-shadow:var(--shadow-sm)}
+  .pill.active .cnt{background:var(--magenta);color:var(--ink)}
+
+  .sec{max-width:1280px;margin:0 auto;padding:26px 20px 0}
+  .sec h2{font-family:var(--disp);text-transform:uppercase;font-size:clamp(26px,5vw,46px);
+    line-height:.95;letter-spacing:.5px}
+  .sec h2 .em{margin-right:8px}
+  .sec .sub{font-family:var(--mono);font-size:12px;color:var(--mut);margin-top:6px}
+
+  .grid{
+    max-width:1280px;margin:0 auto;padding:20px;
+    display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  }
+  .card{
+    position:relative;background:var(--paper);border:var(--line);
+    box-shadow:var(--shadow);padding:8px;cursor:pointer;
+    transition:transform .14s ease,box-shadow .14s ease;
+    opacity:0;animation:pop .4s ease forwards;
+  }
+  .card:nth-child(4n+1){--ac:var(--yellow)}
+  .card:nth-child(4n+2){--ac:var(--cyan)}
+  .card:nth-child(4n+3){--ac:var(--magenta)}
+  .card:nth-child(4n+4){--ac:var(--lime)}
+  .card{background:var(--ac)}
+  .card:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:9px 9px 0 var(--ink)}
+  .card.sel{outline:4px solid var(--lime);outline-offset:2px}
+  .card .ph{
+    aspect-ratio:1/1;background:#fff;border:var(--line);overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card .ph img{width:100%;height:100%;object-fit:contain;display:block;
+    transition:transform .25s ease}
+  .card:hover .ph img{transform:scale(1.06)}
+  .code{
+    position:absolute;top:-9px;left:-6px;z-index:2;
+    font-family:var(--mono);font-weight:700;font-size:12px;
+    background:var(--ink);color:var(--yellow);padding:3px 8px;
+    border:2px solid var(--ink);box-shadow:2px 2px 0 rgba(0,0,0,.4);
+    transform:rotate(-4deg);letter-spacing:.5px;
+  }
+  .pick{
+    position:absolute;top:-10px;right:-10px;z-index:3;
+    width:34px;height:34px;border-radius:50%;border:var(--line);
+    background:#fff;color:var(--ink);font-size:20px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:var(--shadow-sm);line-height:1;transition:transform .12s,background .12s;
+    font-family:var(--body);
+  }
+  .pick:hover{transform:scale(1.12) rotate(90deg)}
+  .card.sel .pick{background:var(--lime);transform:rotate(0)}
+  .card.sel .pick:hover{transform:scale(1.12)}
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+
+  .lb{position:fixed;inset:0;z-index:200;display:none;
+    align-items:center;justify-content:center;padding:20px;
+    background:rgba(8,7,14,.82);backdrop-filter:blur(4px)}
+  .lb.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .lb__box{
+    background:var(--paper);border:4px solid var(--ink);box-shadow:var(--shadow-lg);
+    max-width:min(560px,94vw);width:100%;padding:14px;position:relative;
+    animation:zoom .25s cubic-bezier(.2,1.3,.5,1);
+  }
+  @keyframes zoom{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+  .lb__img{background:#fff;border:var(--line);aspect-ratio:1/1;
+    display:flex;align-items:center;justify-content:center}
+  .lb__img img{width:100%;height:100%;object-fit:contain}
+  .lb__code{font-family:var(--disp);font-size:34px;color:var(--ink);
+    text-transform:uppercase;margin-top:12px;letter-spacing:1px}
+  .lb__row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .btn{
+    font-family:var(--body);font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+    font-size:14px;border:var(--line);box-shadow:var(--shadow-sm);cursor:pointer;
+    padding:11px 16px;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .12s,box-shadow .12s;background:#fff;color:var(--ink);
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .btn.add{background:var(--lime)}
+  .btn.add.is-sel{background:var(--magenta);color:#fff}
+  .btn.close{background:var(--ink);color:var(--yellow);margin-left:auto}
+  .lb__x{position:absolute;top:-16px;right:-16px;width:40px;height:40px;border-radius:50%;
+    background:var(--magenta);color:#fff;border:var(--line);box-shadow:var(--shadow-sm);
+    font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+  .bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:120;
+    background:var(--ink);border-top:4px solid var(--yellow);
+    transform:translateY(120%);transition:transform .3s cubic-bezier(.2,1,.3,1);
+    box-shadow:0 -8px 30px rgba(0,0,0,.5);
+  }
+  .bar.show{transform:translateY(0)}
+  .bar__in{max-width:1280px;margin:0 auto;padding:12px 18px;
+    display:flex;align-items:center;gap:12px}
+  .bar__count{display:flex;align-items:center;gap:10px;color:var(--txt);font-weight:700}
+  .bar__badge{font-family:var(--mono);font-weight:700;background:var(--yellow);color:var(--ink);
+    min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--paper);font-size:14px}
+  .bar__badge.bump{animation:bump .3s ease}
+  @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.4)}100%{transform:scale(1)}}
+  .bar__txt{font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  .bar__txt small{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);text-transform:none;letter-spacing:0}
+  .bar .btn{margin-left:auto}
+  .bar .btn.view{background:var(--bg2);color:var(--txt)}
+  .bar .btn.wa{background:var(--wa);color:#fff;font-size:15px}
+
+  .drawer{position:fixed;inset:0;z-index:180;display:none}
+  .drawer.open{display:block}
+  .drawer__bg{position:absolute;inset:0;background:rgba(8,7,14,.7)}
+  .drawer__panel{
+    position:absolute;left:0;right:0;bottom:0;max-height:80vh;overflow:auto;
+    background:var(--bg2);border-top:4px solid var(--cyan);
+    box-shadow:0 -10px 40px rgba(0,0,0,.6);
+    transform:translateY(100%);transition:transform .3s cubic-bezier(.2,1,.3,1);
+    background-image:radial-gradient(rgba(255,255,255,.04) 1.4px,transparent 1.4px);background-size:22px 22px;
+  }
+  .drawer.open .drawer__panel{transform:translateY(0)}
+  .drawer__head{position:sticky;top:0;background:var(--ink);padding:16px 18px;
+    display:flex;align-items:center;gap:10px;border-bottom:var(--line);z-index:2}
+  .drawer__head h3{font-family:var(--disp);text-transform:uppercase;font-size:24px;color:var(--yellow);letter-spacing:1px}
+  .drawer__head .x{margin-left:auto;background:var(--magenta);color:#fff;border:var(--line);
+    width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}
+  .drawer__list{padding:14px 18px 120px;display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  .drow{display:flex;align-items:center;gap:12px;background:var(--paper);border:var(--line);
+    box-shadow:var(--shadow-sm);padding:8px}
+  .drow img{width:54px;height:54px;object-fit:contain;background:#fff;border:2px solid var(--ink)}
+  .drow .c{font-family:var(--mono);font-weight:700;color:var(--ink);font-size:15px}
+  .drow .rm{margin-left:auto;background:var(--magenta);color:#fff;border:2px solid var(--ink);
+    width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1}
+  .drawer__foot{position:sticky;bottom:0;background:var(--ink);border-top:var(--line);
+    padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap}
+  .drawer__foot .btn.clear{background:var(--bg2);color:var(--txt)}
+  .drawer__foot .btn.wa{background:var(--wa);color:#fff;flex:1;justify-content:center;font-size:15px}
+  .empty{color:var(--mut);font-family:var(--mono);padding:30px;text-align:center;grid-column:1/-1}
+
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);
+    z-index:300;background:var(--lime);color:var(--ink);font-weight:700;
+    border:var(--line);box-shadow:var(--shadow-sm);padding:10px 16px;
+    font-family:var(--mono);font-size:13px;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;text-transform:uppercase}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast.rm{background:var(--magenta);color:#fff}
+
+  footer{max-width:1280px;margin:30px auto 0;padding:0 20px 30px;
+    font-family:var(--mono);font-size:11px;color:var(--mut);text-align:center}
+  @media(max-width:520px){
+    .bar__txt small{display:none}
+    .bar .btn.view span{display:none}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+  }
+</style>
+</head>
+<body>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Figuras bizarras</span><span>Hechas a mano</span><span>Pedí por WhatsApp</span><span>Edición artesanal</span><span>Sumá las que quieras</span><span>Figuras bizarras</span><span>Hechas a mano</span><span>Pedí por WhatsApp</span><span>Edición artesanal</span><span>Sumá las que quieras</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="brand">Argentoy</div>
+    <p class="tagline">Figuras de acción <b>artesanales y bizarras</b>. Tocá una para verla en grande, sumá las que quieras a tu pedido y mandalas todas juntas por <b>WhatsApp</b>.</p>
+    <div class="hint"><span class="dot"></span> Tocá el <b style="margin:0 4px">+</b> de cada figura para agregarla al pedido</div>
+  </header>
+
+  <div class="navwrap"><nav class="nav" id="nav"></nav></div>
+
+  <section class="sec">
+    <h2 id="secTitle"></h2>
+    <div class="sub" id="secSub"></div>
+  </section>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>Catálogo · Argentoy · Las imágenes son referenciales · Pedidos por WhatsApp</footer>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true">
+    <div class="lb__box">
+      <button class="lb__x" id="lbX" aria-label="Cerrar">×</button>
+      <div class="lb__img"><img id="lbImg" alt=""></div>
+      <div class="lb__code" id="lbCode"></div>
+      <div class="lb__row">
+        <button class="btn add" id="lbAdd">＋ Agregar al pedido</button>
+        <button class="btn close" id="lbClose">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer">
+    <div class="drawer__bg" id="drawerBg"></div>
+    <div class="drawer__panel">
+      <div class="drawer__head">
+        <h3>Tu pedido</h3>
+        <button class="x" id="drawerX" aria-label="Cerrar">×</button>
+      </div>
+      <div class="drawer__list" id="drawerList"></div>
+      <div class="drawer__foot">
+        <button class="btn clear" id="clearBtn">Vaciar todo</button>
+        <button class="btn wa" id="drawerWa">Pedir por WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bar" id="bar">
+    <div class="bar__in">
+      <div class="bar__count">
+        <span class="bar__badge" id="barBadge">0</span>
+        <span class="bar__txt">en tu pedido<small>tocá "ver" para revisar</small></span>
+      </div>
+      <button class="btn view" id="viewBtn">👁 <span>Ver</span></button>
+      <button class="btn wa" id="barWa">Pedir por WhatsApp</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   ⚙️  CONFIGURACIÓN
+   ========================================================= */
+const WHATSAPP_NUMBER = "5491125089877";   // ✅ Tu número ya puesto
+
+const WA_INTRO = "Hola! 👋 Vi el catálogo y me interesan estas figuras:";
+const WA_OUTRO = "¿Me pasás precio y disponibilidad? Gracias!";
+
+/* =========================================================
+   📦  CATÁLOGO  (generado a partir de los códigos del Excel)
+   ========================================================= */
+const CATS = [
+  {key:"Crossovers",                     em:"🔀", pre:"CRS", from:1, to:26},
+  {key:"Figuras publicas",               em:"🎭", pre:"FPU", from:1, to:58},
+  {key:"Animacion y Nostalgia Retro",    em:"📺", pre:"CAT", from:1, to:99},
+  {key:"Musica",                         em:"🎸", pre:"MUS", from:1, to:179},
+  {key:"Deportes",                       em:"⚽", pre:"DEP", from:1, to:57},
+  {key:"Cultura Pop, Memes y Virales",   em:"🤡", pre:"CPV", from:1, to:162},
+  {key:"Cine, TV y Series",              em:"🎬", pre:"CTS", from:1, to:159},
+  {key:"Anime y Videojuegos",            em:"🎮", pre:"AVG", from:1, to:37},
+];
+
+const pad = n => String(n).padStart(3,"0");
+CATS.forEach(c=>{
+  c.codes = [];
+  for(let n=c.from;n<=c.to;n++) c.codes.push(c.pre+pad(n));
+});
+const thumbOf = (k,code) => encodeURI(`${k}/thumbs/${code}_thumb.webp`);
+const fullOf  = (k,code) => encodeURI(`${k}/Full/${code}_full.webp`);
+const CAT_OF = {};
+CATS.forEach(c=>c.codes.forEach(code=>CAT_OF[code]=c.key));
+
+/* =========================================================
+   🛒  SELECCIÓN (carrito) con guardado en el navegador
+   ========================================================= */
+const STORE = "argentoy_pedido_v1";
+let selected = loadSel();
+let selSet   = new Set(selected);
+
+function loadSel(){ try{ return JSON.parse(localStorage.getItem(STORE))||[]; }catch(e){ return []; } }
+function saveSel(){ localStorage.setItem(STORE, JSON.stringify(selected)); selSet=new Set(selected); }
+function isSel(code){ return selSet.has(code); }
+
+function toggle(code){
+  if(isSel(code)){
+    selected = selected.filter(c=>c!==code);
+    toast(code+" quitado", true);
+  }else{
+    selected.push(code);
+    toast(code+" agregado ✓", false);
+  }
+  saveSel();
+  syncCard(code);
+  updateBar();
+  if(lbCode.dataset.code===code) syncLbButton(code);
+  if(drawer.classList.contains("open")) renderDrawer();
+}
+
+/* =========================================================
+   🎨  RENDER
+   ========================================================= */
+const nav   = document.getElementById("nav");
+const grid  = document.getElementById("grid");
+const secTitle = document.getElementById("secTitle");
+const secSub   = document.getElementById("secSub");
+let activeCat = 0;
+
+function renderNav(){
+  nav.innerHTML = "";
+  CATS.forEach((c,i)=>{
+    const b = document.createElement("button");
+    b.className = "pill"+(i===activeCat?" active":"");
+    b.innerHTML = `<span class="em">${c.em}</span>${c.key}<span class="cnt">${c.codes.length}</span>`;
+    b.onclick = ()=>{ activeCat=i; renderNav(); renderGrid(); window.scrollTo({top:0,behavior:"smooth"}); };
+    nav.appendChild(b);
+  });
+}
+
+function renderGrid(){
+  const c = CATS[activeCat];
+  secTitle.innerHTML = `<span class="em">${c.em}</span>${c.key}`;
+  secSub.textContent = `${c.codes.length} figuras · tocá una para ampliar`;
+  grid.innerHTML = "";
+  c.codes.forEach((code,idx)=>{
+    const card = document.createElement("div");
+    card.className = "card"+(isSel(code)?" sel":"");
+    card.dataset.code = code;
+    card.style.animationDelay = Math.min(idx,14)*22 + "ms";
+    card.innerHTML = `
+      <span class="code">${code}</span>
+      <button class="pick" aria-label="Agregar ${code}">${isSel(code)?"✓":"+"}</button>
+      <div class="ph"><img src="${thumbOf(c.key,code)}" alt="${code}" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>`;
+    card.querySelector(".ph").onclick = ()=>openLb(code,c.key);
+    card.querySelector(".pick").onclick = (e)=>{ e.stopPropagation(); toggle(code); };
+    grid.appendChild(card);
+  });
+}
+
+function syncCard(code){
+  const card = grid.querySelector(`.card[data-code="${code}"]`);
+  if(!card) return;
+  const on = isSel(code);
+  card.classList.toggle("sel", on);
+  card.querySelector(".pick").textContent = on ? "✓" : "+";
+}
+
+const bar = document.getElementById("bar");
+const barBadge = document.getElementById("barBadge");
+function updateBar(){
+  const n = selected.length;
+  barBadge.textContent = n;
+  bar.classList.toggle("show", n>0);
+  barBadge.classList.remove("bump"); void barBadge.offsetWidth; barBadge.classList.add("bump");
+}
+
+const lb = document.getElementById("lb");
+const lbImg = document.getElementById("lbImg");
+const lbCode = document.getElementById("lbCode");
+const lbAdd = document.getElementById("lbAdd");
+let lbKey = null;
+function openLb(code,key){
+  lbKey=key; lbCode.dataset.code=code;
+  lbImg.src = fullOf(key,code); lbImg.alt = code;
+  lbCode.textContent = code;
+  syncLbButton(code);
+  lb.classList.add("open");
+}
+function syncLbButton(code){
+  const on = isSel(code);
+  lbAdd.classList.toggle("is-sel", on);
+  lbAdd.innerHTML = on ? "✓ En el pedido — quitar" : "＋ Agregar al pedido";
+}
+function closeLb(){ lb.classList.remove("open"); }
+lbAdd.onclick = ()=>toggle(lbCode.dataset.code);
+document.getElementById("lbX").onclick = closeLb;
+document.getElementById("lbClose").onclick = closeLb;
+lb.onclick = e=>{ if(e.target===lb) closeLb(); };
+
+const drawer = document.getElementById("drawer");
+const drawerList = document.getElementById("drawerList");
+function openDrawer(){ renderDrawer(); drawer.classList.add("open"); }
+function closeDrawer(){ drawer.classList.remove("open"); }
+function renderDrawer(){
+  if(selected.length===0){
+    drawerList.innerHTML = `<div class="empty">Aún no elegiste ninguna figura.<br>Cerrá esto y tocá los ＋ del catálogo.</div>`;
+    return;
+  }
+  drawerList.innerHTML = "";
+  selected.forEach(code=>{
+    const k = CAT_OF[code];
+    const row = document.createElement("div");
+    row.className = "drow";
+    row.innerHTML = `<img src="${thumbOf(k,code)}" alt="${code}" onerror="this.style.display='none'"><span class="c">${code}</span>
+      <button class="rm" aria-label="Quitar ${code}">×</button>`;
+    row.querySelector(".rm").onclick = ()=>toggle(code);
+    drawerList.appendChild(row);
+  });
+}
+document.getElementById("viewBtn").onclick = openDrawer;
+document.getElementById("drawerX").onclick = closeDrawer;
+document.getElementById("drawerBg").onclick = closeDrawer;
+document.getElementById("clearBtn").onclick = ()=>{
+  if(selected.length && confirm("¿Vaciar todo el pedido?")){ selected=[]; saveSel(); updateBar(); renderDrawer(); renderGrid(); toast("Pedido vaciado",true); }
+};
+
+function waLink(){
+  if(!WHATSAPP_NUMBER){
+    alert("Falta configurar el número de WhatsApp en el archivo.");
+    return null;
+  }
+  if(selected.length===0){ toast("Elegí al menos una figura",true); return null; }
+  const lista = selected.map(c=>"• "+c).join("%0A");
+  const n = selected.length;
+  const fig = n===1 ? "figura" : "figuras";
+  const msg = `*Pedido desde el catálogo* 🧸%0A${encodeURIComponent(WA_INTRO)}%0A${lista}%0A%0ASon ${n} ${fig}.%0A${encodeURIComponent(WA_OUTRO)}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+}
+function goWa(){ const u=waLink(); if(u) window.open(u,"_blank"); }
+document.getElementById("barWa").onclick = goWa;
+document.getElementById("drawerWa").onclick = goWa;
+
+const toastEl = document.getElementById("toast");
+let toastT;
+function toast(msg, isRemove){
+  toastEl.textContent = msg;
+  toastEl.classList.toggle("rm", !!isRemove);
+  toastEl.classList.add("show");
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>toastEl.classList.remove("show"), 1400);
+}
+
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){ closeLb(); closeDrawer(); }
+});
+
+renderNav();
+renderGrid();
+updateBar();
+</script>
+</body>
+</html>
