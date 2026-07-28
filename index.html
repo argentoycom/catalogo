@@ -115,39 +115,41 @@
     display:grid;gap:16px;
     grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
   }
+
+  /* ===== TARJETAS: marco FINO, fondo limpio, la figura manda ===== */
   .card{
-    position:relative;background:var(--paper);border:var(--line);
-    box-shadow:var(--shadow);padding:8px;cursor:pointer;
-    transition:transform .14s ease,box-shadow .14s ease;
+    position:relative;background:#fff;border:1.5px solid var(--ac);
+    box-shadow:0 3px 12px rgba(0,0,0,.30);
+    padding:10px 8px 8px;cursor:pointer;border-radius:0;
+    transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
     opacity:0;animation:pop .4s ease forwards;
   }
   .card:nth-child(4n+1){--ac:var(--yellow)}
   .card:nth-child(4n+2){--ac:var(--cyan)}
   .card:nth-child(4n+3){--ac:var(--magenta)}
   .card:nth-child(4n+4){--ac:var(--lime)}
-  .card{background:var(--ac)}
-  .card:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:9px 9px 0 var(--ink)}
-  .card.sel{outline:4px solid var(--lime);outline-offset:2px}
+  .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.42);border-color:var(--ink)}
+  .card.sel{border-color:var(--ink);outline:2px solid var(--lime);outline-offset:2px}
   .card .ph{
-    aspect-ratio:1/1;background:#fff;border:var(--line);overflow:hidden;
+    aspect-ratio:1/1;background:#fff;border:none;overflow:hidden;
     display:flex;align-items:center;justify-content:center;
   }
   .card .ph img{width:100%;height:100%;object-fit:contain;display:block;
     transition:transform .25s ease}
-  .card:hover .ph img{transform:scale(1.06)}
+  .card:hover .ph img{transform:scale(1.05)}
   .code{
     position:absolute;top:-9px;left:-6px;z-index:2;
     font-family:var(--mono);font-weight:700;font-size:12px;
-    background:var(--ink);color:var(--yellow);padding:3px 8px;
-    border:2px solid var(--ink);box-shadow:2px 2px 0 rgba(0,0,0,.4);
+    background:var(--ac);color:var(--ink);padding:3px 8px;
+    border:1.5px solid var(--ink);box-shadow:0 2px 5px rgba(0,0,0,.28);
     transform:rotate(-4deg);letter-spacing:.5px;
   }
   .pick{
     position:absolute;top:-10px;right:-10px;z-index:3;
-    width:34px;height:34px;border-radius:50%;border:var(--line);
-    background:#fff;color:var(--ink);font-size:20px;font-weight:700;
+    width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);
+    background:#fff;color:var(--ink);font-size:19px;font-weight:700;
     display:flex;align-items:center;justify-content:center;cursor:pointer;
-    box-shadow:var(--shadow-sm);line-height:1;transition:transform .12s,background .12s;
+    box-shadow:0 2px 6px rgba(0,0,0,.30);line-height:1;transition:transform .12s,background .12s;
     font-family:var(--body);
   }
   .pick:hover{transform:scale(1.12) rotate(90deg)}
@@ -155,22 +157,41 @@
   .card.sel .pick:hover{transform:scale(1.12)}
   @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
 
+  /* ===== LIGHTBOX + CARRUSEL ===== */
   .lb{position:fixed;inset:0;z-index:200;display:none;
     align-items:center;justify-content:center;padding:20px;
     background:rgba(8,7,14,.82);backdrop-filter:blur(4px)}
   .lb.open{display:flex;animation:fade .2s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
   .lb__box{
-    background:var(--paper);border:4px solid var(--ink);box-shadow:var(--shadow-lg);
+    background:var(--paper);border:2px solid var(--ink);box-shadow:var(--shadow-lg);
     max-width:min(560px,94vw);width:100%;padding:14px;position:relative;
     animation:zoom .25s cubic-bezier(.2,1.3,.5,1);
   }
   @keyframes zoom{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-  .lb__img{background:#fff;border:var(--line);aspect-ratio:1/1;
-    display:flex;align-items:center;justify-content:center}
+  .lb__img{background:#fff;border:1.5px solid rgba(10,9,16,.15);aspect-ratio:1/1;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden}
   .lb__img img{width:100%;height:100%;object-fit:contain}
+  .lb__img img.swapL{animation:swapL .22s ease}
+  .lb__img img.swapR{animation:swapR .22s ease}
+  @keyframes swapL{from{opacity:.25;transform:translateX(-16px)}to{opacity:1;transform:none}}
+  @keyframes swapR{from{opacity:.25;transform:translateX(16px)}to{opacity:1;transform:none}}
+  /* flechas del carrusel */
+  .lb__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;
+    width:46px;height:46px;border-radius:50%;border:1.5px solid var(--ink);
+    background:rgba(10,9,16,.55);color:var(--yellow);font-size:24px;line-height:1;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    backdrop-filter:blur(2px);transition:background .15s,transform .15s;
+    font-family:var(--body)}
+  .lb__nav:hover{background:var(--ink);transform:translateY(-50%) scale(1.08)}
+  .lb__nav:active{transform:translateY(-50%) scale(.96)}
+  .lb__nav.prev{left:10px}
+  .lb__nav.next{right:10px}
+  .lb__meta{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px}
   .lb__code{font-family:var(--disp);font-size:34px;color:var(--ink);
-    text-transform:uppercase;margin-top:12px;letter-spacing:1px}
+    text-transform:uppercase;letter-spacing:1px;line-height:1}
+  .lb__count{font-family:var(--mono);font-size:12px;color:#7a7388;white-space:nowrap}
   .lb__row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
   .btn{
     font-family:var(--body);font-weight:700;text-transform:uppercase;letter-spacing:.5px;
@@ -226,9 +247,9 @@
     width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}
   .drawer__list{padding:14px 18px 120px;display:grid;gap:10px;
     grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-  .drow{display:flex;align-items:center;gap:12px;background:var(--paper);border:var(--line);
+  .drow{display:flex;align-items:center;gap:12px;background:var(--paper);border:1.5px solid var(--ink);
     box-shadow:var(--shadow-sm);padding:8px}
-  .drow img{width:54px;height:54px;object-fit:contain;background:#fff;border:2px solid var(--ink)}
+  .drow img{width:54px;height:54px;object-fit:contain;background:#fff;border:1.5px solid var(--ink)}
   .drow .c{font-family:var(--mono);font-weight:700;color:var(--ink);font-size:15px}
   .drow .rm{margin-left:auto;background:var(--magenta);color:#fff;border:2px solid var(--ink);
     width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1}
@@ -252,6 +273,10 @@
     .bar__txt small{display:none}
     .bar .btn.view span{display:none}
     .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+    .lb__nav{width:40px;height:40px;font-size:20px}
+    .lb__nav.prev{left:6px}
+    .lb__nav.next{right:6px}
+    .lb__code{font-size:28px}
   }
 </style>
 </head>
@@ -280,11 +305,19 @@
 
   <footer>Catálogo · Argentoy · Las imágenes son referenciales · Pedidos por WhatsApp</footer>
 
+  <!-- LIGHTBOX con carrusel -->
   <div class="lb" id="lb" role="dialog" aria-modal="true">
     <div class="lb__box">
       <button class="lb__x" id="lbX" aria-label="Cerrar">×</button>
-      <div class="lb__img"><img id="lbImg" alt=""></div>
-      <div class="lb__code" id="lbCode"></div>
+      <div class="lb__img" id="lbImgWrap">
+        <button class="lb__nav prev" id="lbPrev" aria-label="Anterior">‹</button>
+        <img id="lbImg" alt="">
+        <button class="lb__nav next" id="lbNext" aria-label="Siguiente">›</button>
+      </div>
+      <div class="lb__meta">
+        <div class="lb__code" id="lbCode"></div>
+        <div class="lb__count" id="lbCount"></div>
+      </div>
       <div class="lb__row">
         <button class="btn add" id="lbAdd">＋ Agregar al pedido</button>
         <button class="btn close" id="lbClose">Cerrar</button>
@@ -292,6 +325,7 @@
     </div>
   </div>
 
+  <!-- DRAWER -->
   <div class="drawer" id="drawer">
     <div class="drawer__bg" id="drawerBg"></div>
     <div class="drawer__panel">
@@ -307,6 +341,7 @@
     </div>
   </div>
 
+  <!-- BARRA FLOTANTE -->
   <div class="bar" id="bar">
     <div class="bar__in">
       <div class="bar__count">
@@ -375,7 +410,7 @@ function toggle(code){
   saveSel();
   syncCard(code);
   updateBar();
-  if(lbCode.dataset.code===code) syncLbButton(code);
+  if(lb.classList.contains("open") && lbCode.dataset.code===code) syncLbButton(code);
   if(drawer.classList.contains("open")) renderDrawer();
 }
 
@@ -413,7 +448,7 @@ function renderGrid(){
       <span class="code">${code}</span>
       <button class="pick" aria-label="Agregar ${code}">${isSel(code)?"✓":"+"}</button>
       <div class="ph"><img src="${thumbOf(c.key,code)}" alt="${code}" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>`;
-    card.querySelector(".ph").onclick = ()=>openLb(code,c.key);
+    card.querySelector(".ph").onclick = ()=>openLb(code, activeCat);
     card.querySelector(".pick").onclick = (e)=>{ e.stopPropagation(); toggle(code); };
     grid.appendChild(card);
   });
@@ -427,6 +462,7 @@ function syncCard(code){
   card.querySelector(".pick").textContent = on ? "✓" : "+";
 }
 
+/* ===== Barra flotante ===== */
 const bar = document.getElementById("bar");
 const barBadge = document.getElementById("barBadge");
 function updateBar(){
@@ -436,17 +472,42 @@ function updateBar(){
   barBadge.classList.remove("bump"); void barBadge.offsetWidth; barBadge.classList.add("bump");
 }
 
+/* ===== Lightbox + carrusel ===== */
 const lb = document.getElementById("lb");
 const lbImg = document.getElementById("lbImg");
+const lbImgWrap = document.getElementById("lbImgWrap");
 const lbCode = document.getElementById("lbCode");
+const lbCount = document.getElementById("lbCount");
 const lbAdd = document.getElementById("lbAdd");
-let lbKey = null;
-function openLb(code,key){
-  lbKey=key; lbCode.dataset.code=code;
-  lbImg.src = fullOf(key,code); lbImg.alt = code;
-  lbCode.textContent = code;
-  syncLbButton(code);
+let lbCatIndex = 0, lbIndex = 0;
+
+function openLb(code, catIndex){
+  lbCatIndex = catIndex;
+  const c = CATS[catIndex];
+  lbIndex = c.codes.indexOf(code);
+  if(lbIndex < 0) lbIndex = 0;
+  paintLb(false);
   lb.classList.add("open");
+}
+function paintLb(animate, dir){
+  const c = CATS[lbCatIndex];
+  const code = c.codes[lbIndex];
+  lbCode.dataset.code = code;
+  lbCode.textContent = code;
+  lbImg.src = fullOf(c.key, code);
+  lbImg.alt = code;
+  lbCount.textContent = (lbIndex + 1) + " / " + c.codes.length;
+  syncLbButton(code);
+  if(animate){
+    lbImg.classList.remove("swapL","swapR");
+    void lbImg.offsetWidth;                 // reinicia la animación
+    lbImg.classList.add(dir >= 0 ? "swapR" : "swapL");
+  }
+}
+function lbGo(dir){
+  const len = CATS[lbCatIndex].codes.length;
+  lbIndex = (lbIndex + dir + len) % len;     // loop al final / principio
+  paintLb(true, dir);
 }
 function syncLbButton(code){
   const on = isSel(code);
@@ -454,11 +515,28 @@ function syncLbButton(code){
   lbAdd.innerHTML = on ? "✓ En el pedido — quitar" : "＋ Agregar al pedido";
 }
 function closeLb(){ lb.classList.remove("open"); }
+
 lbAdd.onclick = ()=>toggle(lbCode.dataset.code);
 document.getElementById("lbX").onclick = closeLb;
 document.getElementById("lbClose").onclick = closeLb;
+document.getElementById("lbPrev").onclick = (e)=>{ e.stopPropagation(); lbGo(-1); };
+document.getElementById("lbNext").onclick = (e)=>{ e.stopPropagation(); lbGo(1); };
 lb.onclick = e=>{ if(e.target===lb) closeLb(); };
 
+/* swipe táctil sobre la foto (celu) */
+let touchX = null;
+lbImgWrap.addEventListener("touchstart", e=>{
+  if(e.target.closest(".lb__nav")) return;   // no contar toques en las flechas
+  touchX = e.changedTouches[0].clientX;
+}, {passive:true});
+lbImgWrap.addEventListener("touchend", e=>{
+  if(touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if(Math.abs(dx) > 45) lbGo(dx < 0 ? 1 : -1);  // deslizar izq → siguiente
+  touchX = null;
+}, {passive:true});
+
+/* ===== Drawer ===== */
 const drawer = document.getElementById("drawer");
 const drawerList = document.getElementById("drawerList");
 function openDrawer(){ renderDrawer(); drawer.classList.add("open"); }
@@ -486,6 +564,7 @@ document.getElementById("clearBtn").onclick = ()=>{
   if(selected.length && confirm("¿Vaciar todo el pedido?")){ selected=[]; saveSel(); updateBar(); renderDrawer(); renderGrid(); toast("Pedido vaciado",true); }
 };
 
+/* ===== WhatsApp ===== */
 function waLink(){
   if(!WHATSAPP_NUMBER){
     alert("Falta configurar el número de WhatsApp en el archivo.");
@@ -502,6 +581,7 @@ function goWa(){ const u=waLink(); if(u) window.open(u,"_blank"); }
 document.getElementById("barWa").onclick = goWa;
 document.getElementById("drawerWa").onclick = goWa;
 
+/* ===== Toast ===== */
 const toastEl = document.getElementById("toast");
 let toastT;
 function toast(msg, isRemove){
@@ -512,10 +592,16 @@ function toast(msg, isRemove){
   toastT = setTimeout(()=>toastEl.classList.remove("show"), 1400);
 }
 
+/* ===== Teclado ===== */
 document.addEventListener("keydown", e=>{
   if(e.key==="Escape"){ closeLb(); closeDrawer(); }
+  if(lb.classList.contains("open")){
+    if(e.key==="ArrowLeft"){ lbGo(-1); e.preventDefault(); }
+    if(e.key==="ArrowRight"){ lbGo(1); e.preventDefault(); }
+  }
 });
 
+/* ===== Arranque ===== */
 renderNav();
 renderGrid();
 updateBar();
