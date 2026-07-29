@@ -88,7 +88,7 @@
   header {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 36px 20px 16px;
+    padding: 20px 20px 10px;
   }
 
   .header-badge {
@@ -117,14 +117,13 @@
 
   .title-brand {
     font-family: var(--font-display);
-    font-size: clamp(48px, 9vw, 96px);
-    line-height: 0.88;
-    letter-spacing: 1.5px;
+    font-size: clamp(28px, 5vw, 52px);
+    line-height: 0.95;
+    letter-spacing: 1px;
     text-transform: uppercase;
     background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
 
   .title-brand span {
@@ -213,17 +212,17 @@
   .pill-btn {
     flex: 0 0 auto;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-main);
     font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 13px;
-    padding: 8px 16px;
-    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     transition: all 0.2s ease;
   }
 
@@ -261,12 +260,9 @@
   }
 
   .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 12px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 20px 10px;
   }
 
   .sec-title {
@@ -350,7 +346,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 4/5;
-    background: #0d0e12;
+    background: #e2e4e9;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -555,7 +551,10 @@
     position: relative;
     width: 100%;
     aspect-ratio: 4/5;
-    background: #000;
+    background: #d8dae2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .modal-img-container img {
@@ -597,6 +596,39 @@
     color: var(--text-main);
     margin-bottom: 8px;
   }
+
+  /* Modal Navigation Arrows */
+  .modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 16, 21, 0.75);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 15;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .modal-nav-btn:hover {
+    background: var(--accent-yellow);
+    color: #000;
+    border-color: var(--accent-yellow);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .modal-nav-btn.prev { left: 12px; }
+  .modal-nav-btn.next { right: 12px; }
+
 </style>
 </head>
 <body>
@@ -668,6 +700,8 @@
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-card">
       <button class="modal-close" id="modalClose">✕</button>
+      <button class="modal-nav-btn prev" id="modalPrev" title="Anterior (flecha izquierda)">◀</button>
+      <button class="modal-nav-btn next" id="modalNext" title="Siguiente (flecha derecha)">▶</button>
       <div class="modal-img-container">
         <img id="modalImg" src="" alt="Vista previa">
       </div>
@@ -6228,14 +6262,14 @@ function renderGrid() {
       });
     }
     secTitle.textContent = `Resultados de búsqueda: "${searchQuery}"`;
-    secSubtitle.textContent = `Se encontraron ${currentItems.length} figuras`;
+    secSubtitle.textContent = `Se encontraron ${currentItems.length} figuras`; activeItems = currentItems;
   } else {
     const cat = CATS[activeCatIndex];
     if (typeof CATALOG_DATA !== 'undefined') {
       currentItems = CATALOG_DATA.filter(item => item.cat === cat.key);
     }
     secTitle.innerHTML = `${cat.em} ${cat.key}`;
-    secSubtitle.textContent = `${currentItems.length} figuras de colección disponibles`;
+    secSubtitle.textContent = `${currentItems.length} figuras de colección disponibles`; activeItems = currentItems;
   }
 
   if (currentItems.length === 0) {
@@ -6264,7 +6298,7 @@ function renderGrid() {
         <span class="card-badge">${item.isRisky ? 'Code-Only' : 'Carded'}</span>
       </div>
       <div class="card-image-wrap">
-        <img src="${thumbOf(cat, code)}" alt="Figura ${code}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23181a22\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'%238b92a5\' text-anchor=\'middle\' dy=\'.3em\' font-family=\'sans-serif\' font-size=\'12\'%3E${code}%3C/text%3E%3C/svg%3E'">
+        <img src="${fullOf(cat, code)}" alt="Figura ${code}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'%23181a22\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' fill=\'%238b92a5\' text-anchor=\'middle\' dy=\'.3em\' font-family=\'sans-serif\' font-size=\'12\'%3E${code}%3C/text%3E%3C/svg%3E'">
       </div>
       <div class="card-footer">
         <span class="card-subtext" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;" title="${titleLabel}">${titleLabel}</span>
@@ -6299,25 +6333,54 @@ function toggleSelect(code) {
   renderGrid();
 }
 
-function openModal(code, cat) {
-  const item = ITEM_MAP[code];
-  modalCode.textContent = (item && item.name) ? `${item.name} (${code})` : code;
-  modalCat.textContent = `Categoría: ${cat}`;
-  modalImg.src = fullOf(cat, code);
+let activeItems = [];
+let currentModalIndex = 0;
+
+const modalPrev = document.getElementById("modalPrev");
+const modalNext = document.getElementById("modalNext");
+
+function openModal(code, cat, forcedIndex = -1) {
+  if (forcedIndex >= 0) {
+    currentModalIndex = forcedIndex;
+  } else {
+    currentModalIndex = activeItems.findIndex(it => it.code === code);
+    if (currentModalIndex < 0) currentModalIndex = 0;
+  }
+
+  const item = ITEM_MAP[code] || activeItems[currentModalIndex];
+  if (!item) return;
+
+  modalCode.textContent = (item.name) ? `${item.name} (${item.code})` : item.code;
+  modalCat.textContent = `Categoría: ${item.cat}`;
+  modalImg.src = fullOf(item.cat, item.code);
   modalOverlay.classList.add("open");
 
-  const isSel = selectedCodes.has(code);
+  const isSel = selectedCodes.has(item.code);
   modalAddBtn.textContent = isSel ? "Quitar del pedido" : "+ Agregar al pedido";
   modalAddBtn.onclick = () => {
-    toggleSelect(code);
-    openModal(code, cat); // refresh modal state
+    toggleSelect(item.code);
+    openModal(item.code, item.cat, currentModalIndex);
   };
 }
 
+function modalGo(delta) {
+  if (!activeItems || activeItems.length === 0) return;
+  currentModalIndex = (currentModalIndex + delta + activeItems.length) % activeItems.length;
+  const item = activeItems[currentModalIndex];
+  openModal(item.code, item.cat, currentModalIndex);
+}
+
+if (modalPrev) modalPrev.onclick = (e) => { e.stopPropagation(); modalGo(-1); };
+if (modalNext) modalNext.onclick = (e) => { e.stopPropagation(); modalGo(1); };
+
+document.addEventListener('keydown', (e) => {
+  if (!modalOverlay.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') modalGo(-1);
+  if (e.key === 'ArrowRight') modalGo(1);
+  if (e.key === 'Escape') modalOverlay.classList.remove('open');
+});
+
 modalClose.onclick = () => modalOverlay.classList.remove("open");
-modalOverlay.onclick = (e) => {
-  if (e.target === modalOverlay) modalOverlay.classList.remove("open");
-};
 
 // Event Listeners
 searchInput.oninput = (e) => {
