@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARGENTOY · La Milonga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vino:#2a0d18;          /* noche de conventillo */
+  --vino2:#3d1322;
+  --ink:#160609;
+  --oro:#e7b53c;           /* oro de fileteado / altar */
+  --oro2:#f6d77a;
+  --sangre:#c81e3a;
+  --crema:#f3e7cf;
+  --txt:#f3e7cf;
+  --mut:#b98a93;
+  --wa:#25d366;
+  --disp:'Anton',sans-serif;
+  --orn:'DM Serif Display',serif;
+  --body:'Space Grotesk',sans-serif;
+  --mono:'Space Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--txt);min-height:100vh;overflow-x:hidden;padding-bottom:120px;-webkit-tap-highlight-color:transparent;
+  background:var(--vino);
+  background-image:
+    radial-gradient(90% 60% at 50% -5%, rgba(231,181,60,.16), transparent 60%),
+    radial-gradient(70% 50% at 100% 100%, rgba(200,30,58,.14), transparent 60%),
+    /* damasco tenue de pared */
+    repeating-linear-gradient(45deg, rgba(231,181,60,.035) 0 2px, transparent 2px 22px),
+    repeating-linear-gradient(-45deg, rgba(231,181,60,.035) 0 2px, transparent 2px 22px);
+}
+/* polvo dorado flotando (elementos vivos) */
+.dust{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.dust i{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:var(--oro2);opacity:0;box-shadow:0 0 6px var(--oro);animation:rise linear infinite}
+@keyframes rise{0%{opacity:0;transform:translateY(0) translateX(0)}10%{opacity:.8}90%{opacity:.5}100%{opacity:0;transform:translateY(-105vh) translateX(24px)}}
+
+.marquee{position:relative;z-index:2;background:var(--ink);color:var(--oro);border-bottom:2px solid var(--oro);overflow:hidden;white-space:nowrap;font-family:var(--orn);font-style:italic;font-size:16px;letter-spacing:.5px}
+.marquee__track{display:inline-block;animation:scroll 26s linear infinite;padding:7px 0}
+.marquee__track span{padding:0 18px}
+.marquee__track span::after{content:"✦";padding-left:34px;color:var(--sangre)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+header{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:40px 20px 8px;text-align:left}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--oro);opacity:.85}
+.brandwrap{position:relative;display:inline-block;margin-top:6px}
+.brand{font-family:var(--disp);font-size:clamp(46px,11vw,108px);line-height:.82;text-transform:uppercase;letter-spacing:2px;color:var(--crema);
+  text-shadow:0 0 22px rgba(231,181,60,.45),3px 3px 0 var(--sangre),6px 6px 0 var(--ink)}
+/* halo detrás del logo */
+.brandwrap::before{content:"";position:absolute;inset:-30% -10% auto -10%;height:120%;background:radial-gradient(closest-side,rgba(231,181,60,.28),transparent 70%);z-index:-1;filter:blur(6px)}
+.ornline{font-family:var(--orn);font-style:italic;font-size:clamp(22px,5vw,40px);color:var(--oro2);margin-top:2px;transform:rotate(-1.2deg);text-shadow:0 0 14px rgba(231,181,60,.3)}
+.tagline{margin-top:14px;max-width:660px;font-size:clamp(15px,2.4vw,18px);line-height:1.5}
+.tagline b{color:var(--oro2)}
+.hint{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--oro);border:2px solid var(--oro2);box-shadow:0 0 18px rgba(231,181,60,.4);padding:8px 13px;transform:rotate(.5deg)}
+.hint .dot{width:8px;height:8px;border-radius:50%;background:var(--sangre);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,30,58,.6)}50%{box-shadow:0 0 0 6px rgba(200,30,58,0)}}
+
+.navwrap{position:sticky;top:0;z-index:50;margin-top:24px;background:rgba(22,6,9,.86);backdrop-filter:blur(6px);border-bottom:2px solid var(--oro)}
+.nav{max-width:1280px;margin:0 auto;display:flex;gap:10px;padding:13px 20px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;cursor:pointer;font-family:var(--body);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+  background:transparent;color:var(--mut);border:1.5px solid rgba(231,181,60,.4);padding:9px 13px;display:flex;align-items:center;gap:9px;
+  transition:all .15s;transform:rotate(-.4deg)}
+.pill:nth-child(even){transform:rotate(.5deg)}
+.pill:hover{color:var(--crema);border-color:var(--oro);box-shadow:0 0 14px rgba(231,181,60,.25)}
+.pill .em{font-size:17px}
+.pill .cnt{font-family:var(--mono);font-size:11px;background:var(--sangre);color:#fff;padding:1px 6px;border-radius:20px}
+.pill.active{background:var(--oro);color:var(--ink);border-color:var(--oro2);box-shadow:0 0 18px rgba(231,181,60,.4)}
+.pill.active .cnt{background:var(--ink);color:var(--oro)}
+
+.sec{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:26px 20px 0}
+.sec h2{font-family:var(--disp);text-transform:uppercase;font-size:clamp(26px,5.5vw,48px);line-height:.95;letter-spacing:1px}
+.sec h2 .em{margin-right:8px}
+.sec h2 .it{font-family:var(--orn);font-style:italic;text-transform:none;color:var(--oro2);font-size:.7em;letter-spacing:0}
+.sec .sub{font-family:var(--mono);font-size:12px;color:var(--mut);margin-top:6px}
+
+/* ===== GRILLA = nichos / estampitas ===== */
+.grid{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:24px 20px;display:grid;gap:20px 16px;grid-template-columns:repeat(auto-fill,minmax(156px,1fr))}
+.card{position:relative;background:linear-gradient(180deg,var(--vino2),var(--vino));border:1.5px solid rgba(231,181,60,.5);
+  box-shadow:0 6px 20px rgba(0,0,0,.5),inset 0 0 0 4px rgba(22,6,9,.6),inset 0 0 0 5px rgba(231,181,60,.25);
+  padding:10px 8px 0;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;opacity:0;translate:0 18px}
+.card.in{opacity:1;translate:0 0;transition:opacity .5s,translate .5s,transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-5px);border-color:var(--oro2);box-shadow:0 14px 30px rgba(0,0,0,.6),0 0 26px rgba(231,181,60,.3),inset 0 0 0 4px rgba(22,6,9,.6),inset 0 0 0 5px rgba(231,181,60,.4)}
+.card.sel{border-color:var(--oro2);box-shadow:0 0 0 2px var(--oro),0 0 26px rgba(231,181,60,.45)}
+/* la velita / halo detrás de la figura */
+.card .ph{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .ph::before{content:"";position:absolute;width:78%;height:78%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(231,181,60,.32),rgba(200,30,58,.12) 55%,transparent 72%);
+  opacity:.55;transition:opacity .25s,transform .25s;filter:blur(2px)}
+.card:hover .ph::before{opacity:1;transform:scale(1.12)}
+.card .ph img{position:relative;width:100%;height:100%;object-fit:contain;display:block;transition:transform .25s;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+.card:hover .ph img{transform:scale(1.06)}
+/* plaquita de exvoto con el código */
+.card .code{display:block;text-align:center;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:1px;color:var(--ink);
+  background:linear-gradient(180deg,var(--oro2),var(--oro));border:1.5px solid var(--ink);margin:6px 4px 8px;padding:4px 0;
+  box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.pick{position:absolute;top:-9px;right:-9px;z-index:5;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);
+  background:var(--crema);color:var(--ink);font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 0 12px rgba(231,181,60,.5);line-height:1;transition:transform .12s,background .12s;font-family:var(--body)}
+.pick:hover{transform:scale(1.12) rotate(90deg)}
+.card.sel .pick{background:var(--oro);transform:rotate(0)}
+
+/* ===== LIGHTBOX ===== */
+.lb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,3,5,.86);backdrop-filter:blur(4px)}
+.lb.open{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.lb__box{background:linear-gradient(180deg,var(--vino2),var(--vino));border:2px solid var(--oro);box-shadow:0 0 40px rgba(231,181,60,.3),inset 0 0 0 5px rgba(22,6,9,.6),inset 0 0 0 6px rgba(231,181,60,.3);max-width:min(560px,94vw);width:100%;padding:16px;position:relative;animation:zoom .25s cubic-bezier(.2,1.3,.5,1)}
+@keyframes zoom{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
+.lb__img{position:relative;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(closest-side,rgba(231,181,60,.16),transparent 70%)}
+.lb__img img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.6))}
+.lb__img img.swapL{animation:swapL .22s}.lb__img img.swapR{animation:swapR .22s}
+@keyframes swapL{from{opacity:.25;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes swapR{from{opacity:.25;transform:translateX(16px)}to{opacity:1;transform:none}}
+.lb__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--oro);background:rgba(22,6,9,.6);color:var(--oro2);font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;font-family:var(--body)}
+.lb__nav:hover{background:var(--oro);color:var(--ink);transform:translateY(-50%) scale(1.08)}
+.lb__nav.prev{left:8px}.lb__nav.next{right:8px}
+.lb__meta{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px}
+.lb__code{font-family:var(--disp);font-size:32px;color:var(--crema);letter-spacing:1px;text-shadow:0 0 14px rgba(231,181,60,.4)}
+.lb__count{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.lb__row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.btn{font-family:var(--body);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:14px;border:1.5px solid var(--oro);box-shadow:0 0 14px rgba(231,181,60,.2);cursor:pointer;padding:11px 16px;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,box-shadow .12s;background:transparent;color:var(--crema)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(231,181,60,.4)}
+.btn:active{transform:translateY(1px)}
+.btn.add{background:var(--oro);color:var(--ink);border-color:var(--oro2)}
+.btn.add.is-sel{background:var(--sangre);color:#fff;border-color:var(--sangre)}
+.btn.close{margin-left:auto}
+.lb__x{position:absolute;top:-16px;right:-16px;width:40px;height:40px;border-radius:50%;background:var(--sangre);color:#fff;border:1.5px solid var(--oro2);box-shadow:0 0 14px rgba(200,30,58,.5);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--ink);border-top:2px solid var(--oro);transform:translateY(120%);transition:transform .3s cubic-bezier(.2,1,.3,1);box-shadow:0 -8px 30px rgba(0,0,0,.6)}
+.bar.show{transform:translateY(0)}
+.bar__in{max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.bar__count{display:flex;align-items:center;gap:10px;color:var(--crema);font-weight:700}
+.bar__badge{font-family:var(--mono);font-weight:700;background:var(--oro);color:var(--ink);min-width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 0 12px rgba(231,181,60,.5)}
+.bar__badge.bump{animation:bump .3s}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.4)}100%{transform:scale(1)}}
+.bar__txt{font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.bar__txt small{display:block;font-family:var(--mono);font-size:11px;color:var(--mut);text-transform:none}
+.bar .btn{margin-left:auto}
+.bar .btn.wa{background:var(--wa);color:#fff;border-color:var(--wa);font-size:15px;box-shadow:none}
+
+.cart{position:fixed;inset:0;z-index:180;display:none}
+.cart.open{display:block}
+.cart__bg{position:absolute;inset:0;background:rgba(10,3,5,.7)}
+.cart__panel{position:absolute;left:0;right:0;bottom:0;max-height:80vh;overflow:auto;background:var(--vino);border-top:2px solid var(--oro);box-shadow:0 -10px 40px rgba(0,0,0,.6);transform:translateY(100%);transition:transform .3s cubic-bezier(.2,1,.3,1)}
+.cart.open .cart__panel{transform:translateY(0)}
+.cart__head{position:sticky;top:0;background:var(--ink);padding:15px 18px;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--oro);z-index:2}
+.cart__head h3{font-family:var(--orn);font-style:italic;font-size:26px;color:var(--oro2)}
+.cart__head .x{margin-left:auto;background:var(--sangre);color:#fff;border:1.5px solid var(--oro2);width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}
+.cart__list{padding:14px 18px 110px;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.drow{display:flex;align-items:center;gap:12px;background:var(--vino2);border:1.5px solid rgba(231,181,60,.5);box-shadow:inset 0 0 0 3px rgba(22,6,9,.5);padding:8px}
+.drow img{width:52px;height:52px;object-fit:contain;background:radial-gradient(closest-side,rgba(231,181,60,.2),transparent 70%)}
+.drow .c{font-family:var(--mono);font-weight:700;color:var(--oro2);font-size:15px}
+.drow .rm{margin-left:auto;background:var(--sangre);color:#fff;border:1.5px solid var(--oro2);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;line-height:1}
+.cart__foot{position:sticky;bottom:0;background:var(--ink);border-top:2px solid var(--oro);padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap}
+.cart__foot .btn.wa{background:var(--wa);color:#fff;border-color:var(--wa);flex:1;justify-content:center;font-size:15px;box-shadow:none}
+.empty{color:var(--mut);font-family:var(--mono);padding:30px;text-align:center;grid-column:1/-1}
+
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);z-index:300;background:var(--oro);color:var(--ink);font-weight:700;border:1.5px solid var(--oro2);box-shadow:0 0 18px rgba(231,181,60,.5);padding:10px 16px;font-family:var(--mono);font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;text-transform:uppercase}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.rm{background:var(--sangre);color:#fff;border-color:var(--sangre);box-shadow:0 0 18px rgba(200,30,58,.5)}
+
+footer{position:relative;z-index:2;max-width:1280px;margin:36px auto 0;padding:0 20px 30px;text-align:center}
+footer .cred{font-family:var(--orn);font-style:italic;font-size:18px;color:var(--oro2);text-shadow:0 0 14px rgba(231,181,60,.3)}
+footer .cred b{color:var(--crema);font-style:normal;font-family:var(--body);font-weight:700}
+footer .legal{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:14px;line-height:1.6}
+footer .rule{width:120px;height:2px;margin:18px auto;background:linear-gradient(90deg,transparent,var(--oro),transparent)}
+@media(max-width:520px){.bar__txt small{display:none}.bar .btn.view span{display:none}.grid{grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:18px 12px}.lb__nav{width:40px;height:40px;font-size:20px}.lb__code{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="dust" id="dust" aria-hidden="true"></div>
+
+<div class="marquee" aria-hidden="true"><div class="marquee__track">
+<span>una milonga de santitos</span><span>acá bailan todos</span><span>hechos a mano</span><span>de Argentina al mundo</span><span>no se juega: se exhibe</span><span>pedí por código</span>
+<span>una milonga de santitos</span><span>acá bailan todos</span><span>hechos a mano</span><span>de Argentina al mundo</span><span>no se juega: se exhibe</span><span>pedí por código</span>
+</div></div>
+
+<header>
+  <div class="kicker">Colección de parodia · fan-art</div>
+  <div class="brandwrap"><div class="brand">Argentoy</div></div>
+  <div class="ornline">una milonga de santitos pop</div>
+  <p class="tagline">Figuras de acción esculpidas en 3D y <b>pintadas a pincel</b>. Ídolos que no deberían compartir estante — pero comparten la milonga. Tocá una para rezarle de cerca, armá tu altar y mandá el pedido por <b>WhatsApp</b>.</p>
+  <div class="hint"><span class="dot"></span> Tocá el <b style="margin:0 4px">+</b> y sumá santitos al pedido</div>
+</header>
+
+<div class="navwrap"><nav class="nav" id="nav"></nav></div>
+<section class="sec"><h2 id="secTitle"></h2><div class="sub" id="secSub"></div></section>
+<main class="grid" id="grid"></main>
+
+<footer>
+  <div class="rule"></div>
+  <div class="cred">Figuras originales de <b>@milongacustoms</b> — Argentoy las lleva de Argentina al mundo 🌎</div>
+  <div class="legal">Parodia / fan-art no oficial, sin marcas · Piezas de colección para exhibir, no son juguete · Pintadas a mano, de a pocas: si dos te salen clavadas, desconfiá.</div>
+</footer>
+
+<div class="lb" id="lb"><div class="lb__box">
+  <button class="lb__x" id="lbX">×</button>
+  <div class="lb__img" id="lbImgWrap">
+    <button class="lb__nav prev" id="lbPrev">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb__nav next" id="lbNext">›</button>
+  </div>
+  <div class="lb__meta"><div class="lb__code" id="lbCode"></div><div class="lb__count" id="lbCount"></div></div>
+  <div class="lb__row"><button class="btn add" id="lbAdd">＋ Sumar al altar</button><button class="btn close" id="lbClose">Cerrar</button></div>
+</div></div>
+
+<div class="cart" id="cart"><div class="cart__bg" id="cartBg"></div><div class="cart__panel">
+  <div class="cart__head"><h3>tu altar</h3><button class="x" id="cartX">×</button></div>
+  <div class="cart__list" id="cartList"></div>
+  <div class="cart__foot"><button class="btn clear" id="cartClear">Vaciar todo</button><button class="btn wa" id="cartWa">Pedir por WhatsApp</button></div>
+</div></div>
+
+<div class="bar" id="bar"><div class="bar__in">
+  <div class="bar__count"><span class="bar__badge" id="barBadge">0</span><span class="bar__txt">en tu pedido<small>tocá "ver" para revisar</small></span></div>
+  <button class="btn view" id="viewBtn">👁 <span>Ver</span></button>
+  <button class="btn wa" id="barWa">Pedir por WhatsApp</button>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const WHATSAPP_NUMBER="5491125089877";
+const WA_INTRO="Me metí en la milonga y me coparon estas figuras:";
+const WA_OUTRO="¿Me pasás precio y si están? ¡Gracias!";
+const CATS=[
+ {key:"Crossovers",em:"🔀",pre:"CRS",from:1,to:26},
+ {key:"Figuras publicas",em:"🎭",pre:"FPU",from:1,to:58},
+ {key:"Animacion y Nostalgia Retro",em:"📺",pre:"CAT",from:1,to:99},
+ {key:"Musica",em:"🎸",pre:"MUS",from:1,to:179},
+ {key:"Deportes",em:"⚽",pre:"DEP",from:1,to:57},
+ {key:"Cultura Pop, Memes y Virales",em:"🤡",pre:"CPV",from:1,to:162},
+ {key:"Cine, TV y Series",em:"🎬",pre:"CTS",from:1,to:159},
+ {key:"Anime y Videojuegos",em:"🎮",pre:"AVG",from:1,to:37},
+];
+const pad=n=>String(n).padStart(3,"0");
+CATS.forEach(c=>{c.codes=[];for(let n=c.from;n<=c.to;n++)c.codes.push(c.pre+pad(n));});
+const thumbOf=(k,c)=>encodeURI(`${k}/thumbs/${c}_thumb.webp`);
+const fullOf=(k,c)=>encodeURI(`${k}/Full/${c}_full.webp`);
+const CAT_OF={};CATS.forEach(c=>c.codes.forEach(code=>CAT_OF[code]=c.key));
+
+/* polvo dorado */
+(function(){const d=document.getElementById("dust");for(let i=0;i<16;i++){const s=document.createElement("i");s.style.left=Math.random()*100+"%";const dur=9+Math.random()*10;s.style.animationDuration=dur+"s";s.style.animationDelay=(-Math.random()*dur)+"s";const sc=.6+Math.random()*1.6;s.style.transform=`scale(${sc})`;d.appendChild(s);}})();
+
+const STORE="argentoy_pedido_v1";
+let selected=loadSel(),selSet=new Set(selected);
+function loadSel(){try{return JSON.parse(localStorage.getItem(STORE))||[];}catch(e){return [];}}
+function saveSel(){localStorage.setItem(STORE,JSON.stringify(selected));selSet=new Set(selected);}
+const isSel=c=>selSet.has(c);
+function toggle(code){
+  if(isSel(code)){selected=selected.filter(c=>c!==code);toast(code+" quitado",true);}
+  else{selected.push(code);toast(code+" sumado ✓",false);}
+  saveSel();syncCard(code);updateBar();
+  if(lb.classList.contains("open")&&lbCode.dataset.code===code)syncLbButton(code);
+  if(cart.classList.contains("open"))renderCart();
+}
+
+const nav=document.getElementById("nav"),grid=document.getElementById("grid"),secTitle=document.getElementById("secTitle"),secSub=document.getElementById("secSub");
+let activeCat=0;
+function renderNav(){nav.innerHTML="";CATS.forEach((c,i)=>{const b=document.createElement("button");b.className="pill"+(i===activeCat?" active":"");b.innerHTML=`<span class="em">${c.em}</span>${c.key}<span class="cnt">${c.codes.length}</span>`;b.onclick=()=>{activeCat=i;renderNav();renderGrid();window.scrollTo({top:0,behavior:"smooth"});};nav.appendChild(b);});}
+let io;
+function renderGrid(){
+  const c=CATS[activeCat];
+  secTitle.innerHTML=`<span class="em">${c.em}</span>${c.key} <span class="it">en la milonga</span>`;
+  secSub.textContent=`${c.codes.length} santitos · tocá uno para rezarle de cerca`;
+  grid.innerHTML="";
+  if(io)io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.08});
+  c.codes.forEach((code,idx)=>{
+    const card=document.createElement("div");card.className="card"+(isSel(code)?" sel":"");card.dataset.code=code;card.style.transitionDelay=Math.min(idx,12)*22+"ms";
+    card.innerHTML=`<button class="pick">${isSel(code)?"✓":"+"}</button>
+      <div class="ph"><img src="${thumbOf(c.key,code)}" alt="${code}" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
+      <span class="code">${code}</span>`;
+    card.querySelector(".ph").onclick=()=>openLb(code,activeCat);
+    card.querySelector(".pick").onclick=e=>{e.stopPropagation();toggle(code);};
+    grid.appendChild(card);io.observe(card);
+  });
+}
+function syncCard(code){const card=grid.querySelector(`.card[data-code="${code}"]`);if(!card)return;const on=isSel(code);card.classList.toggle("sel",on);card.querySelector(".pick").textContent=on?"✓":"+";}
+
+const bar=document.getElementById("bar"),barBadge=document.getElementById("barBadge");
+function updateBar(){const n=selected.length;barBadge.textContent=n;bar.classList.toggle("show",n>0);barBadge.classList.remove("bump");void barBadge.offsetWidth;barBadge.classList.add("bump");}
+
+const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg"),lbImgWrap=document.getElementById("lbImgWrap"),lbCode=document.getElementById("lbCode"),lbCount=document.getElementById("lbCount"),lbAdd=document.getElementById("lbAdd");
+let lbCat=0,lbIdx=0;
+function openLb(code,ci){lbCat=ci;const c=CATS[ci];lbIdx=c.codes.indexOf(code);if(lbIdx<0)lbIdx=0;paintLb(false);lb.classList.add("open");}
+function paintLb(anim,dir){const c=CATS[lbCat],code=c.codes[lbIdx];lbCode.dataset.code=code;lbCode.textContent=code;lbImg.src=fullOf(c.key,code);lbImg.alt=code;lbCount.textContent=(lbIdx+1)+" / "+c.codes.length;syncLbButton(code);if(anim){lbImg.classList.remove("swapL","swapR");void lbImg.offsetWidth;lbImg.classList.add(dir>=0?"swapR":"swapL");}}
+function lbGo(d){const len=CATS[lbCat].codes.length;lbIdx=(lbIdx+d+len)%len;paintLb(true,d);}
+function syncLbButton(code){const on=isSel(code);lbAdd.classList.toggle("is-sel",on);lbAdd.innerHTML=on?"✓ En el pedido — quitar":"＋ Sumar al altar";}
+function closeLb(){lb.classList.remove("open");}
+lbAdd.onclick=()=>toggle(lbCode.dataset.code);
+document.getElementById("lbX").onclick=closeLb;document.getElementById("lbClose").onclick=closeLb;
+document.getElementById("lbPrev").onclick=e=>{e.stopPropagation();lbGo(-1);};
+document.getElementById("lbNext").onclick=e=>{e.stopPropagation();lbGo(1);};
+lb.onclick=e=>{if(e.target===lb)closeLb();};
+let tx=null;
+lbImgWrap.addEventListener("touchstart",e=>{if(e.target.closest(".lb__nav"))return;tx=e.changedTouches[0].clientX;},{passive:true});
+lbImgWrap.addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45)lbGo(dx<0?1:-1);tx=null;},{passive:true});
+
+const cart=document.getElementById("cart"),cartList=document.getElementById("cartList");
+function openCart(){renderCart();cart.classList.add("open");}
+function closeCart(){cart.classList.remove("open");}
+function renderCart(){
+  if(!selected.length){cartList.innerHTML=`<div class="empty">Tu altar está vacío. Volvé a la milonga y sumá santitos con el ＋.</div>`;return;}
+  cartList.innerHTML="";selected.forEach(code=>{const k=CAT_OF[code];const r=document.createElement("div");r.className="drow";r.innerHTML=`<img src="${thumbOf(k,code)}" alt="${code}" onerror="this.style.display='none'"><span class="c">${code}</span><button class="rm">×</button>`;r.querySelector(".rm").onclick=()=>toggle(code);cartList.appendChild(r);});
+}
+document.getElementById("viewBtn").onclick=openCart;
+document.getElementById("cartX").onclick=closeCart;document.getElementById("cartBg").onclick=closeCart;
+document.getElementById("cartClear").onclick=()=>{if(selected.length&&confirm("¿Vaciar todo el pedido?")){selected=[];saveSel();updateBar();renderCart();renderGrid();toast("Pedido vaciado",true);}};
+
+function waLink(){
+  if(!WHATSAPP_NUMBER){alert("Falta el número de WhatsApp.");return null;}
+  if(!selected.length){toast("Elegí al menos una figura",true);return null;}
+  const lista=selected.map(c=>"• "+c).join("%0A"),n=selected.length,fig=n===1?"figura":"figuras";
+  const msg=`*Pedido desde el catálogo* 🧸%0A${encodeURIComponent(WA_INTRO)}%0A${lista}%0A%0ASon ${n} ${fig}.%0A${encodeURIComponent(WA_OUTRO)}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+}
+function goWa(){const u=waLink();if(u)window.open(u,"_blank");}
+document.getElementById("barWa").onclick=goWa;document.getElementById("cartWa").onclick=goWa;
+
+const toastEl=document.getElementById("toast");let tT;
+function toast(m,rm){toastEl.textContent=m;toastEl.classList.toggle("rm",!!rm);toastEl.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>toastEl.classList.remove("show"),1400);}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeLb();closeCart();}if(lb.classList.contains("open")){if(e.key==="ArrowLeft"){lbGo(-1);e.preventDefault();}if(e.key==="ArrowRight"){lbGo(1);e.preventDefault();}}});
+
+renderNav();renderGrid();updateBar();
+</script>
+</body>
+</html>
